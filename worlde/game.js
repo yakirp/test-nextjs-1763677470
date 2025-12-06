@@ -4,7 +4,7 @@
 
 import { loadWords, getWordList } from './wordLoader.js';
 import { initGame as initGameState, submitGuess, getState, evaluateGuess, isValidGuess } from './gameState.js';
-import { initInputHandlers } from './inputHandler.js';
+import { initInputHandlers, setGameActive, resetInputState } from './inputHandler.js';
 
 /**
  * Initialize the game
@@ -33,10 +33,96 @@ async function initGame() {
         // Test game logic (console verification)
         testGameLogic();
         
+        // Setup modal controls
+        setupModalControls();
+        
         console.log('✅ Game initialization complete!');
         
     } catch (error) {
         console.error('❌ Game initialization failed:', error);
+    }
+}
+
+/**
+ * Setup modal event listeners
+ */
+function setupModalControls() {
+    const playAgainBtn = document.getElementById('play-again-btn');
+    if (playAgainBtn) {
+        playAgainBtn.addEventListener('click', restartGame);
+    }
+}
+
+/**
+ * Restart the game
+ */
+function restartGame() {
+    console.log('🔄 Restarting game...');
+    
+    // Hide modal
+    hideModal();
+    
+    // Reset game state
+    initGameState();
+    
+    // Clear grid
+    clearGrid();
+    
+    // Clear keyboard colors
+    clearKeyboardColors();
+    
+    // Reset input state
+    resetInputState();
+    setGameActive(true);
+    
+    console.log('✅ Game restarted!');
+}
+
+/**
+ * Clear the game grid
+ */
+function clearGrid() {
+    const cells = document.querySelectorAll('.grid-cell');
+    cells.forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('filled', 'correct', 'present', 'absent', 'flip');
+    });
+}
+
+/**
+ * Clear keyboard key colors
+ */
+function clearKeyboardColors() {
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => {
+        key.classList.remove('correct', 'present', 'absent');
+    });
+}
+
+/**
+ * Show modal with message
+ * @param {string} title 
+ * @param {string} message 
+ */
+export function showModal(title, message) {
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMessage = document.getElementById('modal-message');
+    
+    if (modal && modalTitle && modalMessage) {
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+        modal.classList.remove('hidden');
+    }
+}
+
+/**
+ * Hide modal
+ */
+function hideModal() {
+    const modal = document.getElementById('modal');
+    if (modal) {
+        modal.classList.add('hidden');
     }
 }
 
