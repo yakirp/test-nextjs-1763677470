@@ -3,7 +3,7 @@
  * Manages keyboard and on-screen input events
  */
 
-import { getState } from './gameState.js';
+import { getState, submitGuess, LetterStatus } from './gameState.js';
 
 let currentCol = 0;
 let isGameActive = true;
@@ -44,8 +44,7 @@ function handlePhysicalKeyboard(event) {
     // Handle enter
     else if (key === 'ENTER') {
         event.preventDefault();
-        // Enter handling will be added in CMD-5
-        console.log('Enter pressed - submit functionality coming in CMD-5');
+        handleEnter();
     }
 }
 
@@ -70,8 +69,7 @@ function handleOnScreenKeyboard(event) {
     }, 100);
     
     if (keyValue === 'ENTER') {
-        // Enter handling will be added in CMD-5
-        console.log('Enter clicked - submit functionality coming in CMD-5');
+        handleEnter();
     } else if (keyValue === 'BACKSPACE') {
         handleBackspace();
     } else if (/^[A-Z]$/.test(keyValue)) {
@@ -158,6 +156,191 @@ function handleBackspace() {
     // Clear cell
     cell.textContent = '';
     cell.classList.remove('filled');
+}
+
+/**
+ * Handle Enter key - submit guess
+ */
+async function handleEnter() {
+    const state = getState();
+    
+    // Check if game is over
+    if (state.gameStatus !== 'playing') {
+        isGameActive = false;
+        return;
+    }
+    
+    // Check if row is complete
+    if (currentCol < 5) {
+        showError('Not enough letters');
+        shakeRow(state.currentRow);
+        return;
+    }
+    
+    // Get current guess
+    const guess = getCurrentGuess();
+    
+    // Submit guess
+    const result = submitGuess(guess);
+    
+    if (!result.success) {
+        // Invalid word
+        showError(result.error === 'Invalid word' ? 'Not in word list' : result.error);
+        shakeRow(state.currentRow);
+        return;
+    }
+    
+    // Valid guess - animate tiles and reveal colors
+    await revealRow(state.currentRow, result.evaluation);
+    
+    // Update keyboard colors
+    updateKeyboardColors(guess, result.evaluation);
+    
+    // Reset for next row
+    resetInputState();
+    
+    // Check game end
+    if (result.gameStatus === 'won') {
+        isGameActive = false;
+        setTimeout(() => {
+            showWinMessage(result.row + 1);
+        }, 1500);
+    } else if (result.gameStatus === 'lost') {
+        isGameActive = false;
+        setTimeout(() => {
+            showLoseMessage(result.targetWord);
+        }, 1500);
+    }
+}
+
+/**
+ * Show error message
+ * @param {string} message 
+ */
+function showError(message) {
+    // Simple alert for now - will be improved in CMD-8
+    console.warn('⚠️', message);
+    
+    // Could add a toast notification here
+    const existingToast = document.querySelector('.error-toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = 'error-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 2000);
+}
+
+/**
+ * Shake a row to indicate error
+ * @param {number} rowIndex 
+ */
+function shakeRow(rowIndex) {
+    const row = document.querySelector(`.grid-row[data-row="${rowIndex}"]`);
+    if (row) {
+        row.classList.add('shake');
+        setTimeout(() => {
+            row.classList.remove('shake');
+        }, 500);
+    }
+}
+
+/**
+ * Reveal row with flip animations
+ * @param {number} rowIndex 
+ * @param {string[]} evaluation 
+ */
+async function revealRow(rowIndex, evaluation) {
+    const cells = [];
+    for (let col = 0; col < 5; col++) {
+        const cell = document.querySelector(
+            `.grid-cell[data-row="${rowIndex}"][data-col="${col}"]`
+        );
+        if (cell) {
+            cells.push(cell);
+        }
+    }
+    
+    // Flip each cell sequentially
+    for (let i = 0; i < cells.length; i++) {
+        await flipCell(cells[i], evaluation[i], i * 300);
+    }
+}
+
+/**
+ * Flip a single cell with animation
+ * @param {HTMLElement} cell 
+ * @param {string} status 
+ * @param {number} delay 
+ */
+function flipCell(cell, status, delay) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            cell.classList.add('flip');
+            
+            setTimeout(() => {
+                cell.classList.add(status);
+                cell.classList.remove('filled');
+                setTimeout(() => {
+                    cell.classList.remove('flip');
+                    resolve();
+                }, 250);
+            }, 250);
+        }, delay);
+    });
+}
+
+/**
+ * Update keyboard key colors based on guess
+ * @param {string} guess 
+ * @param {string[]} evaluation 
+ */
+function updateKeyboardColors(guess, evaluation) {
+    for (let i = 0; i < guess.length; i++) {
+        const letter = guess[i];
+        const status = evaluation[i];
+        const key = document.querySelector(`.key[data-key="${letter}"]`);
+        
+        if (!key) continue;
+        
+        // Only update if better status (correct > present > absent)
+        const currentStatus = key.classList.contains('correct') ? 'correct' :
+                            key.classList.contains('present') ? 'present' :
+                            key.classList.contains('absent') ? 'absent' : null;
+        
+        if (!currentStatus || 
+            (status === 'correct') ||
+            (status === 'present' && currentStatus !== 'correct')) {
+            key.classList.remove('correct', 'present', 'absent');
+            key.classList.add(status);
+        }
+    }
+}
+
+/**
+ * Show win message
+ * @param {number} attempts 
+ */
+function showWinMessage(attempts) {
+    console.log(`🎉 You won in ${attempts} ${attempts === 1 ? 'attempt' : 'attempts'}!`);
+    // Full modal will be added in CMD-6
+    alert(`Congratulations! You won in ${attempts} ${attempts === 1 ? 'attempt' : 'attempts'}!`);
+}
+
+/**
+ * Show lose message
+ * @param {string} targetWord 
+ */
+function showLoseMessage(targetWord) {
+    console.log(`😢 Game over. The word was: ${targetWord}`);
+    // Full modal will be added in CMD-6
+    alert(`Game over! The word was: ${targetWord}`);
 }
 
 /**
