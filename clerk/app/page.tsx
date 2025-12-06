@@ -5,12 +5,10 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <main className="flex flex-col items-center gap-8 text-center px-4">
         <div className="space-y-4">
-          <h1 className="text-5xl font-bold text-gray-900">
-            Welcome to Next.js with Clerk
-          </h1>
+          <h1 className="text-5xl font-bold text-gray-900">Welcome to Next.js with Clerk</h1>
           <p className="text-xl text-gray-600 max-w-2xl">
-            A simple authentication starter using Clerk and Next.js. Get started
-            by signing in to access protected routes.
+            A simple authentication starter using Clerk and Next.js. Get started by signing in to
+            access protected routes.
           </p>
         </div>
         <div className="flex gap-4 mt-4">

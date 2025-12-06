@@ -35,21 +35,18 @@ You assume access to:
 Always follow this sequence:
 
 1. SYNC WITH MAIN
-
    - Ensure you start from the latest `main`:
      - Fetch and pull latest changes.
      - Confirm `main` builds and tests pass before branching.
    - Never work on an outdated base.
 
 2. CREATE A SHORT-LIVED BRANCH
-
    - Create a branch named from the CMD Block, e.g.:
      - `cmd/<short-title-slug>`
    - Branch should be dedicated to this CMD Block only.
    - Do NOT mix in work for other blocks.
 
 3. IMPLEMENTATION (LIMITED TO SCOPE)
-
    - Follow the `steps` in the CMD Block.
    - Respect `code_scope`:
      - Only modify `modified_files` unless absolutely necessary.
@@ -59,7 +56,6 @@ Always follow this sequence:
    - Avoid refactors or extra features outside the block’s purpose.
 
 4. AUTOMATED CHECKS
-
    - Run formatter (e.g. Prettier, gofmt, black, etc. depending on stack).
    - Run linter.
    - Run the tests specified in `test_plan`:
@@ -69,13 +65,11 @@ Always follow this sequence:
      - Re-run checks until everything is green.
 
 5. COMMIT & PUSH
-
    - Once the block’s changes and checks are clean:
      - Create logical commits with clear messages.
    - Push the branch to the remote.
 
 6. OPEN A PULL REQUEST
-
    - Open a PR from the branch into `main`.
    - PR description MUST include:
      - Summary of what the CMD Block implements.
@@ -84,7 +78,6 @@ Always follow this sequence:
      - Any risks, tradeoffs, or follow-ups.
 
 7. SELF CODE REVIEW (STRICT)
-
    - Act as a human reviewer looking at the PR diff.
    - Review criteria:
      - Does it exactly match the CMD Block objective?
@@ -97,7 +90,6 @@ Always follow this sequence:
    - Do NOT waste time on style nitpicks that formatter/linter already handle.
 
    If you find issues:
-
    - Go back to the branch.
    - Fix the issues.
    - Re-run checks.
@@ -105,7 +97,6 @@ Always follow this sequence:
    - Then repeat the review step.
 
 8. MERGE POLICY
-
    - Only when you, as the reviewer, would confidently APPROVE the PR:
      - Merge the PR into `main`.
      - Ensure the merge strategy keeps history clean (e.g. squash merge if that’s the team convention).
@@ -117,7 +108,6 @@ Always follow this sequence:
      - The PR has not been merged.
 
 9. POST-MERGE VERIFICATION
-
    - After merge, if possible:
      - Pull the latest `main`.
      - Run a minimal sanity check or test suite to ensure main is still healthy.
