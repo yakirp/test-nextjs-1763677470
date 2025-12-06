@@ -4,6 +4,7 @@
 
 import { loadWords, getWordList } from './wordLoader.js';
 import { initGame as initGameState, submitGuess, getState, evaluateGuess, isValidGuess } from './gameState.js';
+import { initInputHandlers } from './inputHandler.js';
 
 /**
  * Initialize the game
@@ -21,6 +22,9 @@ async function initGame() {
         
         // Initialize game state
         initGameState();
+        
+        // Initialize input handlers
+        initInputHandlers();
         
         const state = getState();
         console.log('🎯 Game started! Current row:', state.currentRow);
