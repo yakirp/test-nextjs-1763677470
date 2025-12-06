@@ -4,6 +4,7 @@
  */
 
 import { getState, submitGuess, LetterStatus } from './gameState.js';
+import { showModal } from './game.js';
 
 let currentCol = 0;
 let isGameActive = true;
@@ -328,9 +329,10 @@ function updateKeyboardColors(guess, evaluation) {
  * @param {number} attempts 
  */
 function showWinMessage(attempts) {
-    console.log(`🎉 You won in ${attempts} ${attempts === 1 ? 'attempt' : 'attempts'}!`);
-    // Full modal will be added in CMD-6
-    alert(`Congratulations! You won in ${attempts} ${attempts === 1 ? 'attempt' : 'attempts'}!`);
+    const title = 'Congratulations!';
+    const message = `You guessed the word in ${attempts} ${attempts === 1 ? 'attempt' : 'attempts'}!`;
+    console.log(`🎉 ${message}`);
+    showModal(title, message);
 }
 
 /**
@@ -338,9 +340,10 @@ function showWinMessage(attempts) {
  * @param {string} targetWord 
  */
 function showLoseMessage(targetWord) {
-    console.log(`😢 Game over. The word was: ${targetWord}`);
-    // Full modal will be added in CMD-6
-    alert(`Game over! The word was: ${targetWord}`);
+    const title = 'Game Over';
+    const message = `The word was: ${targetWord}`;
+    console.log(`😢 ${message}`);
+    showModal(title, message);
 }
 
 /**
