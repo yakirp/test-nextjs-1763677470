@@ -32,11 +32,180 @@ body {
     padding: 20px;
 }
 
+header {
+    border-bottom: 1px solid var(--color-empty);
+    margin-bottom: 2rem;
+}
+
 h1 {
     font-size: 2.5rem;
     font-weight: 700;
     letter-spacing: 0.2rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--color-empty);
-    padding-bottom: 1rem;
+    padding: 0.5rem 0 1rem;
+}
+
+/* Game Container */
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Grid Styles */
+#grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0 auto;
+}
+
+.grid-row {
+    display: flex;
+    gap: 5px;
+}
+
+.grid-cell {
+    width: 62px;
+    height: 62px;
+    border: 2px solid var(--color-empty);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    transition: all 0.2s ease;
+}
+
+.grid-cell.filled {
+    border-color: var(--color-absent);
+    animation: pop 0.1s ease;
+}
+
+/* Letter Status Colors */
+.grid-cell.correct {
+    background-color: var(--color-correct);
+    border-color: var(--color-correct);
+    color: white;
+}
+
+.grid-cell.present {
+    background-color: var(--color-present);
+    border-color: var(--color-present);
+    color: white;
+}
+
+.grid-cell.absent {
+    background-color: var(--color-absent);
+    border-color: var(--color-absent);
+    color: white;
+}
+
+/* Keyboard Styles */
+#keyboard {
+    width: 100%;
+    max-width: 500px;
+}
+
+.keyboard-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.spacer-half {
+    flex: 0.5;
+}
+
+.key {
+    font-family: inherit;
+    font-weight: bold;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    height: 58px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--color-empty);
+    color: var(--color-text);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    transition: all 0.1s ease;
+}
+
+.key:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.key:active {
+    transform: scale(0.95);
+}
+
+.key-special {
+    flex: 1.5;
+    font-size: 0.75rem;
+}
+
+.key.correct {
+    background-color: var(--color-correct);
+    color: white;
+}
+
+.key.present {
+    background-color: var(--color-present);
+    color: white;
+}
+
+.key.absent {
+    background-color: var(--color-absent);
+    color: white;
+}
+
+/* Animations */
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #app {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .grid-cell {
+        width: 52px;
+        height: 52px;
+        font-size: 1.75rem;
+    }
+    
+    .key {
+        height: 48px;
+        font-size: 0.75rem;
+    }
+    
+    .key-special {
+        font-size: 0.625rem;
+    }
 }
