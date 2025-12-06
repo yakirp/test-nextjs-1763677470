@@ -18,9 +18,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Your Profile
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Profile</h2>
           <div className="space-y-3">
             <div>
               <span className="text-gray-600 font-medium">Name: </span>
@@ -30,9 +28,7 @@ export default async function DashboardPage() {
             </div>
             <div>
               <span className="text-gray-600 font-medium">Email: </span>
-              <span className="text-gray-900">
-                {user?.emailAddresses[0]?.emailAddress}
-              </span>
+              <span className="text-gray-900">{user?.emailAddresses[0]?.emailAddress}</span>
             </div>
             <div>
               <span className="text-gray-600 font-medium">User ID: </span>
@@ -43,8 +39,8 @@ export default async function DashboardPage() {
 
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
           <p className="text-blue-800 text-sm">
-            🎉 You have successfully authenticated with Clerk! This is a protected
-            route that requires sign-in to access.
+            🎉 You have successfully authenticated with Clerk! This is a protected route that
+            requires sign-in to access.
           </p>
         </div>
       </div>

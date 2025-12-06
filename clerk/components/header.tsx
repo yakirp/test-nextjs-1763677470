@@ -14,18 +14,12 @@ export function Header() {
 
           <nav className="flex items-center gap-4">
             <SignedOut>
-              <Link
-                href="/sign-in"
-                className="text-gray-700 hover:text-indigo-600 font-medium"
-              >
+              <Link href="/sign-in" className="text-gray-700 hover:text-indigo-600 font-medium">
                 Sign In
               </Link>
             </SignedOut>
             <SignedIn>
-              <Link
-                href="/dashboard"
-                className="text-gray-700 hover:text-indigo-600 font-medium"
-              >
+              <Link href="/dashboard" className="text-gray-700 hover:text-indigo-600 font-medium">
                 Dashboard
               </Link>
               <UserButton />

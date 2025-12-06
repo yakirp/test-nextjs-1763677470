@@ -18,12 +18,9 @@ export default function GlobalError({
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-8 text-center">
         <div className="text-red-600 text-5xl mb-4">❌</div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          Application Error
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Application Error</h1>
         <p className="text-gray-600 mb-6">
-          An unexpected error occurred. Please try refreshing the page or return
-          to the homepage.
+          An unexpected error occurred. Please try refreshing the page or return to the homepage.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button

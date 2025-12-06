@@ -88,7 +88,8 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 ```
 
-**Important:** 
+**Important:**
+
 - Never commit `.env.local` to version control
 - The `.gitignore` file already excludes it
 
@@ -146,8 +147,8 @@ const isPublicRoute = createRouteMatcher([
   "/",
   "/sign-in(.*)",
   "/sign-up(.*)",
-  "/about",        // Add this
-  "/pricing",      // Add this
+  "/about", // Add this
+  "/pricing", // Add this
 ]);
 ```
 
@@ -219,11 +220,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#4F46E5',  // Change primary color
-      }
-    }
-  }
-}
+        primary: "#4F46E5", // Change primary color
+      },
+    },
+  },
+};
 ```
 
 ### Add More Protected Routes
@@ -272,6 +273,7 @@ npm run dev
 ### Issue: Clerk keys invalid
 
 **Solution:** Verify keys are copied correctly from Clerk dashboard
+
 - No extra spaces
 - Complete key including prefixes (`pk_test_` and `sk_test_`)
 
