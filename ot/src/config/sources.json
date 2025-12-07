@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "sources": [
+    {
+      "id": "bbc",
+      "name": "BBC News",
+      "baseUrl": "https://www.bbc.com/news",
+      "description": "British Broadcasting Corporation - Global news coverage",
+      "selectors": {
+        "headline": "h2.sc-8ea7699c-3, h3.gs-c-promo-heading__title",
+        "link": "a.gs-c-promo-heading",
+        "date": "time"
+      }
+    },
+    {
+      "id": "hackernews",
+      "name": "Hacker News",
+      "baseUrl": "https://news.ycombinator.com",
+      "description": "Tech and startup news aggregator",
+      "selectors": {
+        "headline": ".titleline > a",
+        "link": ".titleline > a",
+        "date": ".age"
+      }
+    },
+    {
+      "id": "reuters",
+      "name": "Reuters",
+      "baseUrl": "https://www.reuters.com",
+      "description": "International news organization",
+      "selectors": {
+        "headline": "[data-testid='Heading']",
+        "link": "a[data-testid='Link']",
+        "date": "time"
+      }
+    },
+    {
+      "id": "theguardian",
+      "name": "The Guardian",
+      "baseUrl": "https://www.theguardian.com/international",
+      "description": "British daily newspaper",
+      "selectors": {
+        "headline": ".js-headline-text",
+        "link": "a.u-faux-block-link__overlay",
+        "date": "time"
+      }
+    },
+    {
+      "id": "techcrunch",
+      "name": "TechCrunch",
+      "baseUrl": "https://techcrunch.com",
+      "description": "Technology and startup news",
+      "selectors": {
+        "headline": ".post-block__title__link",
+        "link": ".post-block__title__link",
+        "date": "time.river-byline__time"
+      }
+    }
+  ]
+}
